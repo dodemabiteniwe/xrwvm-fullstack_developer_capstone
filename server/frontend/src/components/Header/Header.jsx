@@ -12,8 +12,8 @@ const Header = () => {
   
     const json = await res.json();
     if (json) {
-      let username = sessionStorage.getItem('username');
-      sessionStorage.removeItem('username');
+      let username = sessionStorage.getItem('userName');
+      sessionStorage.removeItem('userName');
       window.location.href = window.location.origin;
       window.location.reload();
       alert("Logging out "+username+"...")
@@ -27,12 +27,12 @@ const Header = () => {
 let home_page_items =  <div></div>
 
 //Gets the username in the current session
-let curr_user = sessionStorage.getItem('username')
+let curr_user = sessionStorage.getItem('userName')
 
 //If the user is logged in, show the username and logout option on home page
 if ( curr_user !== null &&  curr_user !== "") {
     home_page_items = <div className="input_panel">
-      <text className='username'>{sessionStorage.getItem("username")}</text>
+      <text className='username'>{sessionStorage.getItem("userName")}</text>
     <a className="nav_item" href="/djangoapp/logout" onClick={logout}>Logout</a>
   </div>
 }

@@ -27,7 +27,7 @@ const Login = ({ onClose }) => {
     
     const json = await res.json();
     if (json.status != null && json.status === "Authenticated") {
-        sessionStorage.setItem('username', json.userName);
+        sessionStorage.setItem('userName', json.userName);
         setOpen(false);        
     }
     else {

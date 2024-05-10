@@ -28,7 +28,11 @@ urlpatterns = [
     path('login/', TemplateView.as_view(template_name="index.html")),
     path('register/', TemplateView.as_view(template_name="index.html")),
     path('dealers/', TemplateView.as_view(template_name="index.html")),
-    path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
-    path('postreview/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
-    path('manifest.json', TemplateView.as_view(template_name='manifest.json', content_type='application/json'), name='manifest.json')
+    path('dealer/<int:dealer_id>',
+         TemplateView.as_view(template_name="index.html")),
+    path('postreview/<int:dealer_id>', 
+         TemplateView.as_view(template_name="index.html")),
+    path('manifest.json',
+         TemplateView.as_view(template_name='manifest.json',
+          content_type='application/json'), name='manifest.json')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

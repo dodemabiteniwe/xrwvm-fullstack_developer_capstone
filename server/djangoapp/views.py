@@ -12,7 +12,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 import logging
 import json
-# import requests
+# import requests , post_review
 from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
 from .models import CarMake, CarModel
@@ -50,10 +50,9 @@ def logout_request(request):
     return JsonResponse(data)
 
 
-# Create a `registration` view to handle sign up request
+# Create a `registration` view to handle sign up request context = {}
 @csrf_exempt
 def registration(request):
-#    context = {}
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
@@ -75,12 +74,13 @@ def registration(request):
     if not username_exist:
         # Create user in auth_user table
         user = User.objects.create_user(username=username,
-         first_name=first_name, last_name=last_name, password=password, email=email)
+                        first_name=first_name, last_name=last_name,
+                        password=password, email=email)
         # Login the user and redirect to list page
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
         return JsonResponse(data)
-    else :
+    else:
         data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)
 
@@ -95,11 +95,11 @@ def get_cars(request):
     cars = []
     for car_model in car_models:
         cars.append({"CarModel": car_model.name,
-         "CarMake": car_model.car_make.name})
+                "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 
-# Update the `get_dealerships` view to render 
+# Update the `get_dealerships` view to render
 # the index page with a list of dealerships
 # def get_dealerships(request):
 # Update the `get_dealerships` render list of dealerships all by default,
@@ -146,11 +146,11 @@ def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-#            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
         except Exception as e:
-            print(f"Error: {e}")            
-            return JsonResponse({"status": 401, 
-                    "message": "Error in posting review"})
+            print(f"Error: {e}")
+            return JsonResponse({"status": 401,
+                           "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
